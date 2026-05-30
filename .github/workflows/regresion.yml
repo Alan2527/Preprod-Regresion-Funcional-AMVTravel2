@@ -48,11 +48,46 @@ jobs:
 
       - name: Generar Reporte Allure
         if: always()
-        uses: simple-elf/allure-report-action@master
+        uses: simple-elf/allure-report-action@v1.12
         with:
           allure_results: allure-results
           allure_history: allure-history
           keep_histories: 20
+
+      - name: Personalizar branding del reporte (logo, favicon, título)
+        if: always()
+        run: |
+          # El reporte recién generado queda en la subcarpeta más nueva de allure-history.
+          REPORT_DIR=$(find allure-history -maxdepth 1 -mindepth 1 -type d | sort -V | tail -n 1)
+          echo "Aplicando branding en: $REPORT_DIR"
+
+          # 1. Favicon: reemplaza el ícono de la pestaña
+          if [ -f branding/favicon.ico ]; then
+            cp branding/favicon.ico "$REPORT_DIR/favicon.ico"
+          fi
+
+          # 2. Logo: inyecta CSS que reemplaza el logo de Allure por el de AMV.
+          #    Se hace por CSS (no tocando archivos internos) para que sea estable
+          #    ante cambios de versión. El logo va embebido en base64.
+          if [ -f branding/logo.png ]; then
+            LOGO_B64=$(base64 -w 0 branding/logo.png)
+            cat >> "$REPORT_DIR/styles.css" <<CSSEOF
+
+          /* ===== Branding AMV Travel ===== */
+          .side-nav__brand {
+            background-image: url("data:image/png;base64,${LOGO_B64}") !important;
+            background-size: contain !important;
+            background-repeat: no-repeat !important;
+            background-position: center !important;
+            height: 40px !important;
+          }
+          CSSEOF
+          fi
+
+          # 3. Título: reemplaza "Allure Report" en la pestaña del navegador
+          if [ -f "$REPORT_DIR/index.html" ]; then
+            sed -i 's#<title>[^<]*</title>#<title>AMV Travel — Regresión Preprod</title>#' "$REPORT_DIR/index.html"
+          fi
 
       - name: Desplegar reporte a GitHub Pages
         if: always()
