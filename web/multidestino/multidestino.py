@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait, Select
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from diagnostico import diagnosticar_fallo
 
 @allure.epic("WEB")
 @allure.feature("Multidestino")
@@ -254,5 +255,4 @@ def test_reserva_multidestino(logged_in_driver):
             allure.attach(driver.get_screenshot_as_png(), name="13_Reserva_Exitosa", attachment_type=allure.attachment_type.PNG)
 
     except Exception as e:
-        allure.attach(driver.get_screenshot_as_png(), name="Fallo_Reserva_Multidestinos", attachment_type=allure.attachment_type.PNG)
-        pytest.fail(f"Error en ejecución: {str(e)}")
+        diagnosticar_fallo(driver, e, paso="Reserva Multidestino")
