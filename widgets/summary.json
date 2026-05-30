@@ -1,1 +1,1 @@
-{"reportName":"Allure Report","testRuns":[],"statistic":{"failed":5,"broken":0,"skipped":0,"passed":15,"unknown":0,"total":20},"time":{"start":1780169503905,"stop":1780170127515,"duration":623610,"minDuration":2510,"maxDuration":97853,"sumDuration":542604}}
+{"reportName":"AMV Travel — Regresión Preprod","testRuns":[],"statistic":{"failed":5,"broken":0,"skipped":0,"passed":15,"unknown":0,"total":20},"time":{"start":1780169546144,"stop":1780170166360,"duration":620216,"minDuration":2479,"maxDuration":97107,"sumDuration":541490}}
