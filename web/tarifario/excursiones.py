@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from diagnostico import diagnosticar_fallo
 
 @allure.epic("WEB")
 @allure.feature("Tarifario")
@@ -306,5 +307,4 @@ def test_tarifario(logged_in_driver):
 
 
     except Exception as e:
-        allure.attach(driver.get_screenshot_as_png(), name="Fallo_Traslados", attachment_type=allure.attachment_type.PNG)
-        pytest.fail(f"Error en ejecución: {str(e)}")
+        diagnosticar_fallo(driver, e, paso="Tarifario Excursiones")
