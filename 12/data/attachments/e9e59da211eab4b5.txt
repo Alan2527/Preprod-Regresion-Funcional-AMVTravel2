@@ -1,0 +1,6 @@
+Links con id parecido encontrados en la página:
+ctl00_lnkSignOut
+ctl00_cphMain_lnkUpload
+lnkMassiveDeallocate
+lnkMassiveAllocate
+lnkConfirmAllocate
