@@ -1,0 +1,5 @@
+# Versiones pineadas para builds reproducibles.
+# Actualizar de forma deliberada (no automática) y testear antes de subir.
+pytest==8.3.4
+selenium==4.27.1
+allure-pytest==2.13.5

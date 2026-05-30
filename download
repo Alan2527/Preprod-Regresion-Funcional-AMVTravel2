@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# pytest / Allure
+.pytest_cache/
+allure-results/
+allure-report/
+
+# IDE / SO
+.idea/
+.vscode/
+.DS_Store
