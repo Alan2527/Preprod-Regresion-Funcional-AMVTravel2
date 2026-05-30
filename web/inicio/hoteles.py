@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import Select
 from selenium.webdriver.common.action_chains import ActionChains
+from diagnostico import diagnosticar_fallo
 
 @allure.epic("WEB")
 @allure.feature("Inicio")
@@ -50,7 +51,7 @@ def test_reserva_hotel_flujo_completo(logged_in_driver):
             allure.attach(driver.get_screenshot_as_png(), name="Tab_Destino_y_Fechas", attachment_type=allure.attachment_type.PNG)
         except Exception as e:
             allure.attach(driver.get_screenshot_as_png(), name="Fallo_Paso_1_a_3", attachment_type=allure.attachment_type.PNG)
-            pytest.fail(f"Error al ingresar destino o fechas. Detalle: {str(e)}")
+            diagnosticar_fallo(driver, e, paso="Error al ingresar destino o fechas")
 
     with allure.step("4 a 9. Configurar habitaciones y pasajeros"):
         try:
@@ -85,7 +86,7 @@ def test_reserva_hotel_flujo_completo(logged_in_driver):
             allure.attach(driver.get_screenshot_as_png(), name="Configuracion_Pasajeros", attachment_type=allure.attachment_type.PNG)
         except Exception as e:
             allure.attach(driver.get_screenshot_as_png(), name="Fallo_Paso_4_a_9", attachment_type=allure.attachment_type.PNG)
-            pytest.fail(f"Error al configurar los pasajeros. Detalle: {str(e)}")
+            diagnosticar_fallo(driver, e, paso="Error al configurar los pasajeros")
 
     with allure.step("10. Ejecutar Búsqueda y esperar resultados"):
         try:
@@ -96,7 +97,7 @@ def test_reserva_hotel_flujo_completo(logged_in_driver):
             time.sleep(2) 
         except Exception as e:
             allure.attach(driver.get_screenshot_as_png(), name="Fallo_Paso_10", attachment_type=allure.attachment_type.PNG)
-            pytest.fail(f"Error al ejecutar la búsqueda. Detalle: {str(e)}")
+            diagnosticar_fallo(driver, e, paso="Error al ejecutar la búsqueda")
 
     with allure.step("11 a 15. Aplicar Filtros laterales"):
         try:
@@ -112,7 +113,7 @@ def test_reserva_hotel_flujo_completo(logged_in_driver):
             allure.attach(driver.get_screenshot_as_png(), name="Filtros_Aplicados", attachment_type=allure.attachment_type.PNG)
         except Exception as e:
             allure.attach(driver.get_screenshot_as_png(), name="Fallo_Paso_11_a_15", attachment_type=allure.attachment_type.PNG)
-            pytest.fail(f"Error al clickear filtros. Detalle: {str(e)}")
+            diagnosticar_fallo(driver, e, paso="Error al clickear filtros")
 
     with allure.step("16. Validar panel de resultados"):
         try:
@@ -122,7 +123,7 @@ def test_reserva_hotel_flujo_completo(logged_in_driver):
             allure.attach(driver.get_screenshot_as_png(), name="Panel_Resultados_Validado", attachment_type=allure.attachment_type.PNG)
         except Exception as e:
             allure.attach(driver.get_screenshot_as_png(), name="Fallo_Paso_16", attachment_type=allure.attachment_type.PNG)
-            pytest.fail(f"Error en validación del panel: {str(e)}")
+            diagnosticar_fallo(driver, e, paso="Error en validación del panel")
 
     with allure.step("17. Validar componentes de la Card del Hotel y Ver Más"):
         try:
@@ -143,7 +144,7 @@ def test_reserva_hotel_flujo_completo(logged_in_driver):
             time.sleep(3)
         except Exception as e:
             allure.attach(driver.get_screenshot_as_png(), name="Fallo_Paso_17", attachment_type=allure.attachment_type.PNG)
-            pytest.fail(f"Fallo al validar componentes de la Card. Detalle: {str(e)}")
+            diagnosticar_fallo(driver, e, paso="Fallo al validar componentes de la Card")
 
     with allure.step("18. Validar información en el detalle del hotel"):
         try:
@@ -160,7 +161,7 @@ def test_reserva_hotel_flujo_completo(logged_in_driver):
             allure.attach(driver.get_screenshot_as_png(), name="Detalle_Hotel_Validado", attachment_type=allure.attachment_type.PNG)
         except Exception as e:
             allure.attach(driver.get_screenshot_as_png(), name="Fallo_Paso_18", attachment_type=allure.attachment_type.PNG)
-            pytest.fail(f"Fallo al validar los componentes internos del hotel. Detalle: {str(e)}")
+            diagnosticar_fallo(driver, e, paso="Fallo al validar los componentes internos del hotel")
 
     with allure.step("19. Sumar habitación"):
         try:
@@ -170,7 +171,7 @@ def test_reserva_hotel_flujo_completo(logged_in_driver):
             allure.attach(driver.get_screenshot_as_png(), name="Habitacion_Sumada", attachment_type=allure.attachment_type.PNG)
         except Exception as e:
             allure.attach(driver.get_screenshot_as_png(), name="Fallo_Paso_19", attachment_type=allure.attachment_type.PNG)
-            pytest.fail(f"Error al sumar habitación. Detalle: {str(e)}")
+            diagnosticar_fallo(driver, e, paso="Error al sumar habitación")
 
     with allure.step("20 a 22. Validar input y confirmar reserva"):
         try:
@@ -230,4 +231,4 @@ def test_reserva_hotel_flujo_completo(logged_in_driver):
             except:
                 pass
             allure.attach(driver.get_screenshot_as_png(), name="Fallo_Paso_20_a_22", attachment_type=allure.attachment_type.PNG)
-            pytest.fail(f"Error en la confirmación final de la reserva. Detalle: {str(e)}")
+            diagnosticar_fallo(driver, e, paso="Error en la confirmación final de la reserva")

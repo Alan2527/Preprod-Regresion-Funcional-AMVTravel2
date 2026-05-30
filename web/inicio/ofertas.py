@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
+from diagnostico import diagnosticar_fallo
 
 @allure.epic("WEB")
 @allure.feature("Inicio")
@@ -83,5 +84,4 @@ def test_ofertas(logged_in_driver):
             allure.attach(driver.get_screenshot_as_png(), name="4_Tabla_Final_Validada", attachment_type=allure.attachment_type.PNG)
 
     except Exception as e:
-        allure.attach(driver.get_screenshot_as_png(), name="Fallo_en_Ofertas", attachment_type=allure.attachment_type.PNG)
-        pytest.fail(f"El test falló durante la ejecución: {str(e)}")
+        diagnosticar_fallo(driver, e, paso="Buscar Ofertas")
