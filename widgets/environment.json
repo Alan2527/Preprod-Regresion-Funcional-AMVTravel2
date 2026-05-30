@@ -1,0 +1,1 @@
+[{"values":["Preprod"],"name":"Entorno"},{"values":["Chrome (Headless)"],"name":"Navegador"},{"values":["https://preprod.amv.travel/"],"name":"URL_Frontend"},{"values":["https://preprod.bo.amv.travel/"],"name":"URL_BackOffice"},{"values":["Pytest+Selenium"],"name":"Framework"}]

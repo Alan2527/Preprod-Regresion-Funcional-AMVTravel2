@@ -1,0 +1,1 @@
+[Tarifario Cruceros] El elemento se volvió obsoleto (stale): la página se recargó o redibujó mientras el test interactuaba con él. Puede deberse a que la app recargó la sección inesperadamente.

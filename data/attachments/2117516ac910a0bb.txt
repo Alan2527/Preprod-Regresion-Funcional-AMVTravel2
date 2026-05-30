@@ -1,0 +1,1 @@
+[11. Tarifario Paquetes] LA APLICACIÓN MOSTRÓ UN ERROR (alert del navegador): "No se pudo descargar el archivo.". Esto indica un fallo de la aplicación, no del test.

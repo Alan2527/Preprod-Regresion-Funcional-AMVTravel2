@@ -1,0 +1,1 @@
+https://preprod.amv.travel/online/defaulttariff.aspx?country=10&city=5000&from=30-05-2026&to=30-11-2027&resident=false&tab=opportunity
