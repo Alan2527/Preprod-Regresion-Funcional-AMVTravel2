@@ -1,0 +1,63 @@
+name: AMV Travel Preprod Suite
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  test-suite:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Ejecutar suite de regresión
+        id: tests
+        env:
+          AMV_ENV: preprod
+          AMV_USER: ${{ secrets.AMV_USER }}
+          AMV_PASS: ${{ secrets.AMV_PASS }}
+          AMV_AGENCIA_USER: ${{ secrets.AMV_AGENCIA_USER }}
+          BO_PASS: ${{ secrets.BO_PASS }}
+          BO_USER: ${{ secrets.BO_USER }}
+        # Corre TODA la suite. No usamos '|| true': dejamos que pytest
+        # marque el resultado real del commit. El reporte se publica igual
+        # gracias a 'if: always()' en los pasos siguientes.
+        run: pytest --alluredir=allure-results
+
+      - name: Guardar resultados crudos como artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+          retention-days: 14
+
+      - name: Generar Reporte Allure
+        if: always()
+        uses: simple-elf/allure-report-action@master
+        with:
+          allure_results: allure-results
+          allure_history: allure-history
+          keep_histories: 20
+
+      - name: Desplegar reporte a GitHub Pages
+        if: always()
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
